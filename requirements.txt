@@ -1,0 +1,6 @@
+flask
+gensim
+jieba
+pandas
+xlrd
+line-bot-sdk
