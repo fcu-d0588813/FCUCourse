@@ -28,3 +28,18 @@ d['teacher']=t
 data['teacher']=t
 
 data.to_csv('106course.csv',index=False)
+
+
+dcard = pd.read_csv('dcardScrap.csv')
+
+t=[]
+c=[]
+for d in dcard['teacher_course']:
+    dd = d.split(' ')[-2:]
+    t.append(dd[0])
+    c.append(dd[1])
+    
+dcard['teacher']=t
+dcard['course']=c
+
+dcard.to_csv('dcardScrap.csv',index=False)
