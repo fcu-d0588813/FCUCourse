@@ -11,8 +11,8 @@ import psycopg2
 #連接資料庫
 
 DATABASE_URL = os.environ['postgres://uskhmdlztebice:5714697bd569731729daa365947918c513374d064055ec40fd3644ed56963f0f@ec2-107-20-237-78.compute-1.amazonaws.com:5432/d3l8u727fkdhuh']
-conn = psycopg2.connect(DATABASE_URL,database="d3l8u727fkdhuh",user="uskhmdlztebice",password="5714697bd569731729daa365947918c513374d064055ec40fd3644ed56963f0f",host="ec2-107-20-237-78.compute-1.amazonaws.com",port="5432")
-
+conn = psycopg2.connect(database="d3l8u727fkdhuh",user="uskhmdlztebice",password="5714697bd569731729daa365947918c513374d064055ec40fd3644ed56963f0f",host="ec2-107-20-237-78.compute-1.amazonaws.com",port="5432")
+cursor = conn.cursor()
 		
 def get(req):
     p = req['queryResult']['parameters']
