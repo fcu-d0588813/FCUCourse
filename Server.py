@@ -6,7 +6,21 @@ Created on Sat Dec 22 14:58:52 2018
 """
 
 
+import requests
+import random
+from bs4 import BeautifulSoup,Tag
+import pandas as pd
+from datetime import datetime
+from dateutil import parser
 
+def get_activity(req):
+    
+    p = req['queryResult']['parameters']
+    
+    msg = 'Course: ' + p['Course'] + '\nTeacher: ' + p['Teacher'] + '\nAction: ' + p['Action']
+    
+    print(msg)
+    return msg
 
 import json
 from flask import Flask, request, make_response, jsonify
@@ -20,7 +34,7 @@ def verify():
 def webhook():
     req = request.get_json(silent=True, force=True)
     print(req)
-    res = {"fulfillmentText": '收到'}
+    res = {"fulfillmentText": get_activity(req)}
         
     return make_response(jsonify(res))
 
