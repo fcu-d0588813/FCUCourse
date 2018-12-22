@@ -43,3 +43,7 @@ dcard['teacher']=t
 dcard['course']=c
 
 dcard.to_csv('dcardScrap.csv',index=False)
+
+course = pd.DataFrame(data,columns=['department','cname','score','cls_name','credit','note'])
+
+course.to_csv('CourseInDB.csv',index=False)
