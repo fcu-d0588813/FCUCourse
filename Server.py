@@ -16,7 +16,7 @@ cursor = conn.cursor()
 def get(req):
     p = req['queryResult']['parameters']
     msg = 'Course: ' + p['Course'] + '\nTeacher: ' + p['Teacher'] + '\nAction: ' + p['Action']
-	cursor.execute("SELECT * from TEACHER")
+	cursor.execute("SELECT * FROM TEACHER;")
 	rows = cursor.fetchone()
     print(msg)
     return rows[0]
