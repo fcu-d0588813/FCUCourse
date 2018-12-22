@@ -24,7 +24,7 @@ app = Flask(__name__)
 def verify():
     return "FCU Course", 200
 
-@app.route('/', methods=['POST'])
+@app.route('/webhook', methods=['POST'])
 def webhook():
     req = request.get_json(silent=True, force=True)
     print(req)
@@ -33,6 +33,6 @@ def webhook():
     return make_response(jsonify(res))
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0')
+    app.run()
     
     
