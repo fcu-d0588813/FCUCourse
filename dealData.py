@@ -45,5 +45,10 @@ dcard['course']=c
 dcard.to_csv('dcardScrap.csv',index=False)
 
 course = pd.DataFrame(data,columns=['department','cname','score','cls_name','credit','note'])
-
+#quizmethod : 考試方式 ($-dcard)
 course.to_csv('CourseInDB.csv',index=False)
+
+comment = pd.DataFrame(dcard,columns=['rate','cnotice','remark'])
+comment['rate'] = [r[0] for r in comment['rate']]
+
+comment.to_csv('CommentInDB.csv',index=False)
