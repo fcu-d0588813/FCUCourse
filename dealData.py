@@ -45,6 +45,11 @@ dcard['course']=c
 dcard.to_csv('dcardScrap.csv',index=False)
 
 course = pd.DataFrame(data,columns=['department','cname','score','cls_name','credit','note'])
+po = list(data['acptcnt']/data['precnt'])
+for i,p in enumerate(po):
+    if p>1:
+        po[i]=1
+course['populariy'] = po
 #quizmethod : 考試方式 ($-dcard)
 course.to_csv('CourseInDB.csv',index=False)
 
