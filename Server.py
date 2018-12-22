@@ -7,14 +7,23 @@ Created on Sat Dec 22 14:58:52 2018
 
 import os
 import pandas as pd
+import psycopg2
+
+#連接資料庫
+conn = psycopg2.connect(database="d3l8u727fkdhuh",
+                        user="uskhmdlztebice",
+                        password="5714697bd569731729daa365947918c513374d064055ec40fd3644ed56963f0f",
+                        host="ec2-107-20-237-78.compute-1.amazonaws.com",
+                        port="5432")
+cursor = conn.cursor()
 
 def get(req):
     p = req['queryResult']['parameters']
-    
     msg = 'Course: ' + p['Course'] + '\nTeacher: ' + p['Teacher'] + '\nAction: ' + p['Action']
-    
+	cursor.execute("SELECT TName from TEACHER where TName='林明言'")
+	rows = cur.fetchall()
     print(msg)
-    return msg
+    return rows[0]
 
 
 from flask import Flask, request, make_response, jsonify
