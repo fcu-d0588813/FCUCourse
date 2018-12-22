@@ -20,10 +20,10 @@ cursor = conn.cursor()
 def get(req):
     p = req['queryResult']['parameters']
     msg = 'Course: ' + p['Course'] + '\nTeacher: ' + p['Teacher'] + '\nAction: ' + p['Action']
-	cursor.execute("SELECT TName from TEACHER where TName='林明言'")
-	rows = cur.fetchall()
+	#cursor.execute("SELECT TName from TEACHER where TName='林明言'")
+	#rows = cur.fetchall()
     print(msg)
-    return rows[0]
+    return msg
 
 
 from flask import Flask, request, make_response, jsonify
