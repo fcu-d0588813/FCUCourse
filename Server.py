@@ -19,7 +19,7 @@ def get(req):
     cursor.execute("SELECT * FROM TEACHER;")
     rows = cursor.fetchone()
     print(msg)
-    return rows[0]
+    return rows[1]
 
 from flask import Flask, request, make_response, jsonify
 app = Flask(__name__)
