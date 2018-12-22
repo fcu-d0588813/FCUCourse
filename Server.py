@@ -25,8 +25,8 @@ app = Flask(__name__)
 def verify():
     return "Hello world", 200
 
-@app.route('/webhook', methods=['POST'])
-def webhook():
+@app.route('/callback', methods=['POST'])
+def callback():
     req = request.get_json(silent=True, force=True)
     print(req)
     res = {"fulfillmentText": get_activity(req)}
@@ -35,3 +35,5 @@ def webhook():
 
 if __name__ == "__main__":
     app.run()
+    
+    
