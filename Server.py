@@ -9,12 +9,12 @@ import os
 import pandas as pd
 
 def get(req):
-    #p = req['queryResult']['parameters']
+    p = req['queryResult']['parameters']
     
-    #msg = 'Course: ' + p['Course'] + '\nTeacher: ' + p['Teacher'] + '\nAction: ' + p['Action']
+    msg = 'Course: ' + p['Course'] + '\nTeacher: ' + p['Teacher'] + '\nAction: ' + p['Action']
     
-    #print(msg)
-    return "接收"
+    print(msg)
+    return msg
 
 
 from flask import Flask, request, make_response, jsonify
