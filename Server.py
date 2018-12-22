@@ -5,7 +5,7 @@ Created on Sat Dec 22 14:58:52 2018
 @author: YURU
 """
 
-
+import os
 import pandas as pd
 
 def get(req):
@@ -31,8 +31,9 @@ def webhook():
     res = {"fulfillmentText": get(req)}
         
     return make_response(jsonify(res))
-
+	
 if __name__ == "__main__":
-    app.run()
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
     
     
