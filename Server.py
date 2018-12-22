@@ -8,6 +8,9 @@ Created on Sat Dec 22 14:58:52 2018
 import os
 import pandas as pd
 import psycopg2
+#連接資料庫
+DATABASE_URL = os.environ['postgres://uskhmdlztebice:5714697bd569731729daa365947918c513374d064055ec40fd3644ed56963f0f@ec2-107-20-237-78.compute-1.amazonaws.com:5432/d3l8u727fkdhuh']
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 		
 def get(req):
@@ -36,7 +39,5 @@ def webhook():
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
-	#連接資料庫
-	DATABASE_URL = os.environ['postgres://uskhmdlztebice:5714697bd569731729daa365947918c513374d064055ec40fd3644ed56963f0f@ec2-107-20-237-78.compute-1.amazonaws.com:5432/d3l8u727fkdhuh']
-	conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
     
