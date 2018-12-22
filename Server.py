@@ -20,7 +20,7 @@ def verify():
 def webhook():
     req = request.get_json(silent=True, force=True)
     print(req)
-    res = {"fulfillmentText": req}
+    res = {"fulfillmentText": '收到'}
         
     return make_response(jsonify(res))
 
