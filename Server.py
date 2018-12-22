@@ -5,16 +5,16 @@ Created on Sat Dec 22 14:58:52 2018
 @author: YURU
 """
 
-
+import os
 import pandas as pd
 
 def get(req):
-    #p = req['queryResult']['parameters']
+    p = req['queryResult']['parameters']
     
-    #msg = 'Course: ' + p['Course'] + '\nTeacher: ' + p['Teacher'] + '\nAction: ' + p['Action']
+    msg = 'Course: ' + p['Course'] + '\nTeacher: ' + p['Teacher'] + '\nAction: ' + p['Action']
     
-    #print(msg)
-    return "接收"
+    print(msg)
+    return msg
 
 
 from flask import Flask, request, make_response, jsonify
@@ -31,8 +31,9 @@ def webhook():
     res = {"fulfillmentText": get(req)}
         
     return make_response(jsonify(res))
-
+	
 if __name__ == "__main__":
-    app.run()
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
     
     
