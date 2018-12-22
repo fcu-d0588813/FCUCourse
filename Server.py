@@ -16,10 +16,10 @@ cursor = conn.cursor()
 def get(req):
     p = req['queryResult']['parameters']
     msg = 'Course: ' + p['Course'] + '\nTeacher: ' + p['Teacher'] + '\nAction: ' + p['Action']
-	#cursor.execute("SELECT TName from TEACHER where TName='林明言'")
-	#rows = cur.fetchall()
+	cursor.execute("SELECT * from TEACHER")
+	rows = cursor.fetchone()
     print(msg)
-    return msg
+    return rows[0]
 
 from flask import Flask, request, make_response, jsonify
 app = Flask(__name__)
@@ -40,4 +40,5 @@ if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
 
+conn.close()
     
