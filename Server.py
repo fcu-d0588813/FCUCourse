@@ -6,12 +6,7 @@ Created on Sat Dec 22 14:58:52 2018
 """
 
 
-import requests
-import random
-from bs4 import BeautifulSoup,Tag
 import pandas as pd
-from datetime import datetime
-from dateutil import parser
 
 def get_activity(req):
     
@@ -22,7 +17,7 @@ def get_activity(req):
     print(msg)
     return msg
 
-import json
+
 from flask import Flask, request, make_response, jsonify
 app = Flask(__name__)
 
@@ -38,7 +33,5 @@ def webhook():
         
     return make_response(jsonify(res))
 
-import os
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run()
