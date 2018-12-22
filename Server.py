@@ -16,8 +16,7 @@ def get(req):
 	#cursor.execute("SELECT TName from TEACHER where TName='林明言'")
 	#rows = cur.fetchall()
     print(msg)
-    return db_msg
-
+    return msg
 
 from flask import Flask, request, make_response, jsonify
 app = Flask(__name__)
