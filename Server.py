@@ -8,8 +8,7 @@ Created on Sat Dec 22 14:58:52 2018
 
 import pandas as pd
 
-def get_activity(req):
-    
+def get(req):
     p = req['queryResult']['parameters']
     
     msg = 'Course: ' + p['Course'] + '\nTeacher: ' + p['Teacher'] + '\nAction: ' + p['Action']
@@ -29,7 +28,7 @@ def verify():
 def webhook():
     req = request.get_json(silent=True, force=True)
     print(req)
-    res = {"fulfillmentText": get_activity(req)}
+    res = {"fulfillmentText": get(req)}
         
     return make_response(jsonify(res))
 
