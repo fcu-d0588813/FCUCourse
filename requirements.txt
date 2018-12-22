@@ -4,4 +4,5 @@ jieba
 pandas
 xlrd
 line-bot-sdk
-Dialogflow
+requests==2.18.4
+gunicorn==19.7.1
