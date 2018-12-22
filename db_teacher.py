@@ -2,8 +2,6 @@
 import psycopg2
 import pandas as pd
 
-
-# Update connection string information obtained from the portal
 conn = psycopg2.connect(database="d3l8u727fkdhuh",
                         user="uskhmdlztebice",
                         password="5714697bd569731729daa365947918c513374d064055ec40fd3644ed56963f0f",
@@ -12,12 +10,10 @@ conn = psycopg2.connect(database="d3l8u727fkdhuh",
 cursor = conn.cursor()
 
 p = pd.read_csv('teacher.csv')
-
 for r in p['teacher']:
     print (r)
     cursor.execute("INSERT INTO TEACHER (TName) VALUES  ('"+r+"')")
 
-    
 conn.commit()
 
 
