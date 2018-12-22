@@ -23,10 +23,10 @@ app = Flask(__name__)
 
 @app.route("/")
 def verify():
-    return "Hello world", 200
+    return "FCU Course", 200
 
-@app.route('/callback', methods=['POST'])
-def callback():
+@app.route('/webhook', methods=['POST'])
+def webhook():
     req = request.get_json(silent=True, force=True)
     print(req)
     res = {"fulfillmentText": get_activity(req)}
