@@ -17,6 +17,7 @@ def get(req):
     p = req['queryResult']['parameters']
     msg = 'Course: ' + p['Course'] + '\nTeacher: ' + p['Teacher'] + '\nAction: ' + p['Action']
     cursor.execute("SELECT * FROM TEACHER;")
+	#SELECT * FROM TEACHER WHERE tname='林俞佑' (要用「'」不能用「"」)
     rows = cursor.fetchone()
     print(msg)
     return rows[1]
