@@ -6,7 +6,6 @@ Created on Sat Dec 22 14:58:52 2018
 """
 
 import os
-import pandas as pd
 import psycopg2
 
 #連接資料庫
