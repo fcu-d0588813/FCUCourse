@@ -19,18 +19,40 @@ cursor = conn.cursor()
 		
 def get(req):
     p = req['queryResult']['parameters']
-    msg = 'Course: ' + p['Course'] + '\nTeacher: ' + p['Teacher'] + '\nAction: ' + p['Action']
-    cursor.execute("SELECT * FROM TEACHER WHERE tname='"+p['Teacher']+"';")
-	#SELECT * FROM TEACHER WHERE tname='林俞佑' (要用「'」不能用「"」)
-    rows = cursor.fetchone()
+    msg=''
+    #msg = 'Course: ' + p['Course'] + '\nTeacher: ' + p['Teacher'] + '\nAction: ' + p['Action']
+    if p['Action'] == '評價':  #老師-課程 or 老師
+        cursor.execute("SELECT * FROM TEACHER WHERE tname='"+p['Teacher']+"';")
+        teacher = cursor.fetchone()
+        msg += str(teacher[0].strip()) + teacher[1].strip() +'\n'
+        if p['Course'] != '':
+            #尋找 老師-課程
+            #加入msg
+            msg += 'Course: '+p['Course']+'\n'
+        else:
+            #尋找對應老師ID的course、comment
+            #計算平均rate
+            msg += 'Rate: *****\n'
+    elif p['Action'] == '熱門程度': #老師-課程 or 課程
+        #尋找課程
+        # if 有老師:
+        #    尋找 老師-課程
+        msg += '熱門程度: 100%\n'
+    else:
+        msg = '請輸入正確課程~'
+    
+    #cursor.execute("SELECT * FROM TEACHER WHERE tname='"+p['Teacher']+"';")
+    #SELECT * FROM TEACHER WHERE tname='林俞佑' (要用「'」不能用「"」)
+    #rows = cursor.fetchone()
     print(msg)
-    return rows[1].strip()
+    return msg
 
 from flask import Flask, request, make_response, jsonify
 app = Flask(__name__)
 
 @app.route("/")
 def verify():
+    print('print')
     return "FCU Course", 200
 
 @app.route('/webhook', methods=['POST'])
