@@ -16,11 +16,11 @@ cursor = conn.cursor()
 def get(req):
     p = req['queryResult']['parameters']
     msg = 'Course: ' + p['Course'] + '\nTeacher: ' + p['Teacher'] + '\nAction: ' + p['Action']
-    cursor.execute("SELECT * FROM TEACHER;")
+    cursor.execute("SELECT TName FROM TEACHER WHERE TName='"+p['Teacher']+"';")
 	#SELECT * FROM TEACHER WHERE tname='林俞佑' (要用「'」不能用「"」)
     rows = cursor.fetchone()
     print(msg)
-    return rows[1]
+    return rows[1].strip()
 
 from flask import Flask, request, make_response, jsonify
 app = Flask(__name__)
