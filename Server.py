@@ -16,7 +16,7 @@ cursor = conn.cursor()
 def get(req):
     p = req['queryResult']['parameters']
     msg = 'Course: ' + p['Course'] + '\nTeacher: ' + p['Teacher'] + '\nAction: ' + p['Action']
-    cursor.execute("SELECT TName FROM TEACHER WHERE TName='"+p['Teacher']+"';")
+    cursor.execute("SELECT tname FROM TEACHER WHERE tname='"+p['Teacher']+"';")
 	#SELECT * FROM TEACHER WHERE tname='林俞佑' (要用「'」不能用「"」)
     rows = cursor.fetchone()
     print(msg)
