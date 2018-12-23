@@ -24,7 +24,7 @@ def get(req):
     if p['Action'] == '評價':  #老師-課程 or 老師
         cursor.execute("SELECT * FROM TEACHER WHERE tname='"+p['Teacher']+"';")
         teacher = cursor.fetchone()
-        msg += str(teacher[0].strip()) + teacher[1].strip() +'\n'
+        msg += str(teacher[0]).strip() + teacher[1].strip() +'\n'
         if p['Course'] != '':
             #尋找 老師-課程
             #加入msg
