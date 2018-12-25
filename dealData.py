@@ -127,6 +127,9 @@ teach['populartiy'] = po
 teach = teach[teach['cid']!=-1]
 teach = teach[teach['tid']!=-1]
 
+teach['ct'] = [str(c)+'_'+str(t) for c,t in zip(teach['cid'],teach['tid'])]
+teach = teach[teach['ct'].duplicated()==False]
+
 teach.to_csv('teach.csv',index=False)
 
 #comment
