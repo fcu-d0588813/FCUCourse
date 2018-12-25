@@ -17,10 +17,11 @@ cursor = conn.cursor()
 p = pd.read_csv('course.csv')
 
 cursor.execute("CREATE TABLE COURSE (Cid INTEGER PRIMARY KEY, Department VARCHAR(50), Cname VARCHAR(50) );")
+#cursor.execute('DROP TABLE COURSE')
 
 for i,(sub,dept) in enumerate(zip(p['sub'],p['dept']),1):
-    print (i,sub,dept)
-    cursor.execute("INSERT INTO COURSE (Cid,Department,Cname) VALUES  ('"+str(i)+"','"+sub+"','"+dept+"')")
+    print (i,dept,sub)
+    cursor.execute("INSERT INTO COURSE (Cid,Department,Cname) VALUES  ('"+str(i)+"','"+dept+"','"+sub+"')")
 
 conn.commit()
 

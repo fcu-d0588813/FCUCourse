@@ -13,9 +13,9 @@ p = pd.read_csv('teacher.csv')
 
 cursor.execute("CREATE TABLE TEACHER (Tid INTEGER PRIMARY KEY, Tname VARCHAR(50) );")
 
-for r in p['teacher']:
+for i,r in enumerate(p['teacher']):
     print (r)
-    cursor.execute("INSERT INTO TEACHER (TName) VALUES  ('"+r+"')")
+    cursor.execute("INSERT INTO TEACHER (Tid,TName) VALUES  ('"+str(i)+"','"+r+"')")
 
 conn.commit()
 
