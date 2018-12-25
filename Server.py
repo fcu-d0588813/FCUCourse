@@ -38,13 +38,15 @@ def get(req):
         #教授名字 課程名稱 課程
         cursor.execute("SELECT score FROM Teacher,Teach,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Teach.tid=Teacher.tid AND Teach.cid=Course.cid;")
         co = cursor.fetchone()
-        msg += str(co[0]).strip()+'\n'
+        if co != None:
+            msg += str(co[0]).strip()+'\n'
     elif p['Action'] == '熱門程度': #老師-課程 or 課程
         if p['Teacher'] != '':
             #教授名字 課程名稱 熱門程度
             cursor.execute("SELECT score FROM Teacher,Teach,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Teach.tid=Teacher.tid AND Teach.cid=Course.cid;")
             hot = cursor.fetchone()
-            msg += '熱門程度: '+str(hot[0]).strip() +'%\n'
+            if hot != None:
+                msg += '熱門程度: '+str(hot[0]).strip() +'%\n'
         else:
             #課程名稱 熱門程度
             msg += '#課程名稱 熱門程度\n'
