@@ -28,7 +28,7 @@ deptId = {"GE":'通識中心', #通識中心
 
 data = pd.read_csv('106course.csv')
 teacher = pd.read_csv('teacher.csv')
-teacher = set(list(teacher['teacher']))
+teacher = list(teacher['teacher'])
 
 d = pd.DataFrame(data,columns=['sub_name','scr_period','tpa_score'])
 

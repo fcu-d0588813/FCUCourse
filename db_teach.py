@@ -17,8 +17,8 @@ cursor = conn.cursor()
 
 p = pd.read_csv('teach.csv')
 
-cursor.execute("CREATE TABLE TEACH (Tid INTEGER  REFERENCES TEACHER (Tid), Cid INTEGER REFERENCES COURSE (Cid), PRIMARY KEY(Tid,Cid), Credit INTEGER, Cls_name VARCHAR(100), Score VARCHAR(1500), Popularity INTEGER, Note VARCHAR(150) );")
-
+cursor.execute("CREATE TABLE TEACH (Tid INTEGER  REFERENCES TEACHER (Tid), Cid INTEGER REFERENCES COURSE (Cid), PRIMARY KEY(Tid,Cid), Credit INTEGER, Cls_name VARCHAR(100), Score VARCHAR(3000), Popularity INTEGER, Note VARCHAR(200) );")
+#cursor.execute('DROP TABLE TEACH')
 '''
 Tid,Cid,Credit,Cls_name,Score,Popularity,Note
 tid+cid+credit+cls+score+popu+note
@@ -28,6 +28,7 @@ for tid,cid,credit,cls,score,popu,note in zip(p['tid'],p['cid'],p['credit'],p['c
     if score == '-1':
         score='nan'
     score = str(score).replace("'",'o').replace('\r','').replace('\t\t\t','').replace('\t',' ')
+    note = str(note).replace('\r','')
     print (tid,cid,credit,cls,score,popu,note)
     cursor.execute("INSERT INTO TEACH (Tid,Cid,Credit,Cls_name,Score,Popularity,Note) VALUES ('"+str(tid)+"','"+str(cid)+"','"+str(int(credit))+"','"+str(cls)+"','"+str(score)+"','"+str(int(popu*100))+"','"+str(note)+"')")
 
