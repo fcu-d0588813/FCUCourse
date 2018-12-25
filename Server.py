@@ -28,25 +28,32 @@ def get(req):
             #教授名字 課程名稱 評論
             #尋找 老師-課程
             #加入msg
-            msg += 'Course: '+p['Course']+'\n'
-            msg += '評價: 讚讚\n'
+            msg += '#教授名字 課程名稱 評論\n'
         else:
+            #教授名字 推薦指數/評論
             #尋找對應老師ID的course、comment
             #計算平均rate
-            msg += 'Rate: *****\n'
+            msg += '#教授名字 推薦指數/評論\n'
     elif p['Action'] == '課程' and p['Teacher'] != '' and p['Course'] != '':
         #教授名字 課程名稱 課程
         cursor.execute("SELECT score FROM Teacher,Teach,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Teach.tid=Teacher.tid AND Teach.cid=Course.cid;")
         co = cursor.fetchone()
         if co != None:
             msg += str(co[0]).strip()+'\n'
+    elif p['Action'] == '作業考試' and p['Teacher'] != '' and p['Course'] != '':
+        #教授名字 課程名稱 作業考試
+        #cursor.execute("SELECT score FROM Teacher,Teach,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Teach.tid=Teacher.tid AND Teach.cid=Course.cid;")
+        #co = cursor.fetchone()
+        #if co != None:
+        #    msg += str(co[0]).strip()+'\n'
+        msg += '#教授名字 課程名稱 作業考試\n'
     elif p['Action'] == '熱門程度': #老師-課程 or 課程
         if p['Teacher'] != '':
             #教授名字 課程名稱 熱門程度
             cursor.execute("SELECT score FROM Teacher,Teach,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Teach.tid=Teacher.tid AND Teach.cid=Course.cid;")
             hot = cursor.fetchone()
             if hot != None:
-                msg += '熱門程度: '+str(hot[0]).strip() +'%\n'
+                msg += '熱門程度: '+str(hot[1]).strip() +'%\n'
         else:
             #課程名稱 熱門程度
             msg += '#課程名稱 熱門程度\n'
