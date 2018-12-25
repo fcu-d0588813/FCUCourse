@@ -64,8 +64,6 @@ def get(req):
     if msg == '': 
         msg = '請輸入正確課程~'
     
-    #cursor.execute("SELECT * FROM TEACHER WHERE tname='"+p['Teacher']+"';")
-    #SELECT * FROM TEACHER WHERE tname='林俞佑' (要用「'」不能用「"」)
     #rows = cursor.fetchone()
     print(msg.strip())
     return msg.strip()
