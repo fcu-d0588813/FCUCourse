@@ -50,7 +50,7 @@ def get(req):
     elif p['Action'] == '熱門程度': #老師-課程 or 課程
         if p['Teacher'] != '':
             #教授名字 課程名稱 熱門程度
-            cursor.execute("SELECT score FROM Teacher,Teach,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Teach.tid=Teacher.tid AND Teach.cid=Course.cid;")
+            cursor.execute("SELECT popularity FROM Teacher,Teach,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Teach.tid=Teacher.tid AND Teach.cid=Course.cid;")
             hot = cursor.fetchone()
             if hot != None:
                 msg += '熱門程度: '+str(hot[0]).strip() +'%\n'
