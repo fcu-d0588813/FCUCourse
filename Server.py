@@ -53,7 +53,7 @@ def get(req):
             cursor.execute("SELECT score FROM Teacher,Teach,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Teach.tid=Teacher.tid AND Teach.cid=Course.cid;")
             hot = cursor.fetchone()
             if hot != None:
-                msg += '熱門程度: '+str(hot[1]).strip() +'%\n'
+                msg += '熱門程度: '+str(hot[0]).strip() +'%\n'
         else:
             #課程名稱 熱門程度
             msg += '#課程名稱 熱門程度\n'
