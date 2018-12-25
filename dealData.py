@@ -43,14 +43,18 @@ for s in d['scr_period']:
 t
 
 d['teacher']=t
-
 data['teacher']=t
+
+score=[]
+for s in data['score']:
+    s = str(s).replace('\r','').replace('\n\n','\n').strip()
+    score.append(s)
+data['score'] = score
 
 data.to_csv('106course.csv',index=False)
 
-
+#dcard
 dcard = pd.read_csv('dcardScrap.csv')
-
 t=[]
 c=[]
 for d in dcard['teacher_course']:
@@ -63,20 +67,14 @@ dcard['course']=c
 
 dcard.to_csv('dcardScrap.csv',index=False)
 
-course = pd.DataFrame(data,columns=['department','cname','score','cls_name','credit','note'])
-po = list(data['acptcnt']/data['precnt'])
-for i,p in enumerate(po):
-    if p>1:
-        po[i]=1
-course['populariy'] = po
-#quizmethod : 考試方式 ($-dcard)
-course.to_csv('CourseInDB.csv',index=False)
 
 comment = pd.DataFrame(dcard,columns=['rate','cnotice','remark'])
 comment['rate'] = [r[0] for r in comment['rate']]
 
 comment.to_csv('CommentInDB.csv',index=False)
 
+
+#course
 sub = pd.read_csv('sub_name.csv')
 sub = sub['1']
 dept=[]
@@ -88,5 +86,47 @@ for s in sub:
     else:
         d = list(d)[0]
     dept.append(deptId[d])
-course = pd.DataFrame({'sub':sub,'dept':dept})
+course = pd.DataFrame({'cid':range(1,len(sub)+1),'sub':sub,'dept':dept})
 course.to_csv('course.csv',index=False)
+
+
+#teach
+teach = pd.DataFrame(data,columns=['score','cls_name','credit','note'])
+cid=[]
+for n in data['cname']:
+    c = list(course[course['sub']==n]['cid'])
+    if len(c)==0:
+        cid.append(-1)
+    else:
+        cid.extend(c)
+teach['cid'] = cid
+
+teachers = pd.DataFrame({'tid':range(1,len(teacher)+1),'tname':list(teacher)})
+tid=[]
+for n in data['tname']:
+    print(n)
+    n = n[1:-1].replace("'",'').split(',')
+    if len(n)!=1 or n[0]=='':
+        t = -1
+    else:
+        n = n[0]
+        t = list(teachers[teachers['tname']==n]['tid'])
+        if len(t)==0:
+            t = -1
+        else:
+            t = t[0]
+    tid.append(t)
+teach['tid'] = tid
+        
+po = list(data['acptcnt']/data['precnt'])
+for i,p in enumerate(po):
+    if p>1:
+        po[i]=1
+teach['populariy'] = po
+
+teach = teach[teach['cid']!=-1]
+teach = teach[teach['tid']!=-1]
+
+teach.to_csv('teach.csv',index=False)
+
+
