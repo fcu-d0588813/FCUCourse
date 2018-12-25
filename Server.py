@@ -51,7 +51,7 @@ def get(req):
             #課程名稱 熱門程度
             msg += '#課程名稱 熱門程度\n'
             
-    else:
+    if msg == '': 
         msg = '請輸入正確課程~'
     
     #cursor.execute("SELECT * FROM TEACHER WHERE tname='"+p['Teacher']+"';")
