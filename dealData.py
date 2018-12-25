@@ -88,5 +88,5 @@ for s in sub:
     else:
         d = list(d)[0]
     dept.append(deptId[d])
-
-
+course = pd.DataFrame({'sub':sub,'dept':dept})
+course.to_csv('course.csv',index=False)
