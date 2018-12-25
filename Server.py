@@ -25,6 +25,7 @@ def get(req):
         teacher = cursor.fetchone()
         msg += str(teacher[0]).strip() + teacher[1].strip() +'\n'
         if p['Course'] != '':
+            #教授名字 課程名稱 評論
             #尋找 老師-課程
             #加入msg
             msg += 'Course: '+p['Course']+'\n'
@@ -33,15 +34,20 @@ def get(req):
             #尋找對應老師ID的course、comment
             #計算平均rate
             msg += 'Rate: *****\n'
+    elif p['Action'] == '課程' and p['Teacher'] != '' and p['Course'] != '':
+        #教授名字 課程名稱 課程
+        cursor.execute("SELECT score FROM Teacher,Teach,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Teach.tid=Teacher.tid AND Teach.cid=Course.cid;")
+        co = cursor.fetchone()
+        msg += str(co[0]).strip()+'\n'
     elif p['Action'] == '熱門程度': #老師-課程 or 課程
-        #尋找課程
-        msg += 'Course: '+p['Course']+'\n'
         if p['Teacher'] != '':
-            cursor.execute("SELECT * FROM TEACHER WHERE tname='"+p['Teacher']+"';")
-            teacher = cursor.fetchone()
-            msg += str(teacher[0]).strip() + teacher[1].strip() +'\n'
-        #    尋找 老師-課程
-        msg += '熱門程度: 100%\n'
+            #教授名字 課程名稱 熱門程度
+            cursor.execute("SELECT score FROM Teacher,Teach,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Teach.tid=Teacher.tid AND Teach.cid=Course.cid;")
+            hot = cursor.fetchone()
+            msg += '熱門程度: '+str(hot[0]).strip() +'%\n'
+        else:
+            #尋找 老師-課程
+            
     else:
         msg = '請輸入正確課程~'
     
