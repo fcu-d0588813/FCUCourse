@@ -10,6 +10,9 @@ conn = psycopg2.connect(database="d3l8u727fkdhuh",
 cursor = conn.cursor()
 
 p = pd.read_csv('teacher.csv')
+
+#建立teacher table的程式碼 貼在這
+
 for r in p['teacher']:
     print (r)
     cursor.execute("INSERT INTO TEACHER (TName) VALUES  ('"+r+"')")
