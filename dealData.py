@@ -129,4 +129,35 @@ teach = teach[teach['tid']!=-1]
 
 teach.to_csv('teach.csv',index=False)
 
+#comment
+teacher = pd.read_csv('teacher.csv')
+course = pd.read_csv('course.csv')
+dcard = pd.read_csv('dcardScrap.csv')
 
+cid=[]
+tid=[]
+
+comment = pd.DataFrame(dcard,columns=['cid','tid','rate','cnotice','remark'])
+comment['rate'] = [r[0] for r in comment['rate']] 
+
+for n in dcard['tname']:
+    t=list(teacher[teacher['teacher']==n].index)
+    if len(t) == 0:
+        t=-1
+    else:
+        t=t[0]+1
+    tid.append(t)
+comment['tid']=tid
+print(tid)
+
+   
+for n in dcard['cname']:
+    c=list(course[course['sub']==n].index)
+    if  len(c)==0:
+        c=-1
+    else:
+        c=c[0]+1
+    cid.append(c)
+comment['cid']=cid
+print(comment)
+comment.to_csv('comment.csv',index=False)
