@@ -46,7 +46,8 @@ def get(req):
             hot = cursor.fetchone()
             msg += '熱門程度: '+str(hot[0]).strip() +'%\n'
         else:
-            #尋找 老師-課程
+            #課程名稱 熱門程度
+            msg += '#課程名稱 熱門程度\n'
             
     else:
         msg = '請輸入正確課程~'
