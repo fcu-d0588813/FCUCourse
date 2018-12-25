@@ -11,7 +11,7 @@ cursor = conn.cursor()
 
 p = pd.read_csv('teacher.csv')
 
-#建立teacher table的程式碼 貼在這
+cursor.execute("CREATE TABLE TEACHER (Tid INTEGER PRIMARY KEY, Tname VARCHAR(50) );")
 
 for r in p['teacher']:
     print (r)
