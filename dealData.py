@@ -122,7 +122,7 @@ po = list(data['acptcnt']/data['precnt'])
 for i,p in enumerate(po):
     if p>1:
         po[i]=1
-teach['populariy'] = po
+teach['populartiy'] = po
 
 teach = teach[teach['cid']!=-1]
 teach = teach[teach['tid']!=-1]
