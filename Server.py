@@ -7,6 +7,7 @@ Created on Sat Dec 22 14:58:52 2018
 
 import os
 import psycopg2
+import random
 
 #連接資料庫
 conn = psycopg2.connect(database="d3l8u727fkdhuh",
@@ -21,27 +22,29 @@ def get(req):
     msg=''
     #msg = 'Course: ' + p['Course'] + '\nTeacher: ' + p['Teacher'] + '\nAction: ' + p['Action']
     if p['Action'] == '評價':  #老師-課程 or 老師
-        cursor.execute("SELECT * FROM TEACHER WHERE tname='"+p['Teacher']+"';")
-        teacher = cursor.fetchone()
-        msg +='教授:'+teacher[1].strip() +'\n'
+        #cursor.execute("SELECT * FROM TEACHER WHERE tname='"+p['Teacher']+"';")
+        #teacher = cursor.fetchone()
+        #msg +='教授:'+teacher[1].strip() +'\n'
         if p['Course'] != '':
+            #教授名字 課程名稱 評論
             cursor.execute("SELECT rate,remark FROM TEACHER,COURSE,COMMENT WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND TEACHER.tid=COMMENT.tid AND COURSE.cid=COMMENT.cid;")
             co = cursor.fetchone()
-            #教授名字 課程名稱 評論
-            #列出教授 推薦指數 評論
+            print(co)
+            msg +='教授:'+ p['Teacher'] +'\n'
             if co != None:
                 if co[0]!=None:
                     msg +='推薦指數: '+str(co[0]).strip()+'\n'
-                if co[1]!=None:
+                if co[1]!=None or co[1]!='nan':
+                    #r = random.randint(0,len(co[1]))
                     msg +=str(co[1]).strip() +'\n'
                 else:
                     msg +='沒有評論'+'\n'                      
             else:
                 msg += '沒有資料，請重新輸入'+'\n'
         else:
-            cursor.execute("SELECT round(avg(rate)) FROM TEACHER,COMMENT WHERE tname='"+p['Teacher']+"' AND TEACHER.tid=COMMENT.tid;")
-            co = cursor.fetchone()
             #教授名字 推薦指數/評論
+            cursor.execute("SELECT round(avg(rate),2) FROM TEACHER,COMMENT WHERE tname='"+p['Teacher']+"' AND TEACHER.tid=COMMENT.tid;")
+            co = cursor.fetchone()
             #尋找對應老師ID的course、comment
             #計算平均rate
             if co != None:
