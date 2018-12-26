@@ -145,8 +145,12 @@ def get(req):
     return msg.strip()
 
 def insertDB(req):
-
-    return '新增成功!'
+    msg=''
+    p = req['queryResult']['outputContexts'][-1]['parameters']
+    
+    msg = p['Course']+' '+p['Teacher']+' '+p['Rate']+'\n'+'新增成功!'
+    print(msg.strip())
+    return msg.strip()
 
 from flask import Flask, request, make_response, jsonify
 app = Flask(__name__)
