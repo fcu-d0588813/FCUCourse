@@ -16,13 +16,20 @@ conn = psycopg2.connect(database="d3l8u727fkdhuh",
 cursor = conn.cursor()
 
 p = pd.read_csv('comment.csv',encoding='big5')
+#p = pd.read_csv('surveyComment.csv')
 
-#cursor.execute("CREATE TABLE COMMENT (No INTEGER,Cid INTEGER REFERENCES COURSE(Cid),Tid INTEGER REFERENCES TEACHER(Tid),Rate INTEGER, Cnotice VARCHAR(2000), Remark VARCHAR(2000),Quizmethod VARCHAR(2000),PRIMARY KEY (No));")
+cursor.execute("CREATE TABLE COMMENT (No INTEGER,Cid INTEGER REFERENCES COURSE(Cid),Tid INTEGER REFERENCES TEACHER(Tid),Rate INTEGER, Cnotice VARCHAR(2000), Remark VARCHAR(2000),Quizmethod VARCHAR(2000),PRIMARY KEY (No));")
 #cursor.execute('DROP TABLE COMMENT')
-
 
 for i,(cid,tid,rate,cnotice,quizmethod,remark) in enumerate(zip(p['cid'],p['tid'],p['rate'],p['cnotice'],p['quizmethod'],p['remark']),1):
     print (i,cid,tid,rate,cnotice,quizmethod,remark)
     cursor.execute("INSERT INTO COMMENT (No,Cid,Tid,Rate,Cnotice,Quizmethod,Remark) VALUES  ('"+str(i)+"','"+str(cid)+"','"+str(tid)+"','"+str(rate)+"','"+str(cnotice)+"','"+str(quizmethod)+"','"+str(remark)+"')")
+
+'''
+新增表單資料
+for (id,cid,tid,rate,quizmethod,remark) in zip(p['id'],p['cid'],p['tid'],p['rate'],p['quizmethod'],p['remark']):
+    print (id,cid,tid,rate,quizmethod,remark)
+    cursor.execute("INSERT INTO COMMENT (No,Cid,Tid,Rate,Quizmethod,Remark) VALUES  ('"+str(id)+"','"+str(cid)+"','"+str(tid)+"','"+str(rate)+"','"+str(quizmethod)+"','"+str(remark)+"')")
+'''
 
 conn.commit()
