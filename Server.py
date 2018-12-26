@@ -25,7 +25,7 @@ def get(req):
         if p['Course'] != '':
             #教授名字 課程名稱 評論
             cursor.execute("SELECT round(avg(rate),2) FROM TEACHER,COURSE,COMMENT WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND TEACHER.tid=COMMENT.tid AND COURSE.cid=COMMENT.cid;")
-            rate = cursor.fetchall()
+            rate = cursor.fetchone()
             cursor.execute("SELECT remark FROM TEACHER,COURSE,COMMENT WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND TEACHER.tid=COMMENT.tid AND COURSE.cid=COMMENT.cid;")
             remark = cursor.fetchall()
             print(rate,remark)
@@ -33,10 +33,10 @@ def get(req):
             if rate != None:
                 if rate[0]!=None:
                     msg +='推薦指數: '+str(rate[0]).strip()+'\n'
-                if remark[0]!=None or remark[0]!='nan':
-                    r = random.randint(0,len(remark[0]))
+                if remark != None :
+                    r = random.randint(0,len(remark))
                     print('>>',r)
-                    msg +=str(remark[0]).strip() +'\n'
+                    msg +=str(remark[r][0]).strip() +'\n'
                 else:
                     msg +='沒有評論'+'\n'                      
             else:
@@ -44,21 +44,20 @@ def get(req):
         else:
             #教授名字 推薦指數/評論
             cursor.execute("SELECT round(avg(rate),2) FROM TEACHER,COMMENT WHERE tname='"+p['Teacher']+"' AND TEACHER.tid=COMMENT.tid;")
-            co = cursor.fetchone()
+            rate = cursor.fetchone()
             #尋找對應老師ID的course、comment
             #計算平均rate
-            if co != None:
-                msg +='推薦指數: '+str(co[0]).strip() +'\n'
+            if rate != None:
+                msg +='推薦指數: '+str(rate[0]).strip() +'\n'
             else:
                 msg += '沒有資料，請重新輸入'+'\n'
            
-            
     elif p['Action'] == '課程' and p['Teacher'] != '' and p['Course'] != '':
         #教授名字 課程名稱 課程
         cursor.execute("SELECT score FROM Teacher,Teach,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Teach.tid=Teacher.tid AND Teach.cid=Course.cid;")
-        co = cursor.fetchone()
-        if co != None:
-            msg += str(co[0]).strip()+'\n'
+        score = cursor.fetchone()
+        if score != None:
+            msg += str(score[0]).strip()+'\n'
         else:
             msg += '沒有資料，請重新輸入'
         
@@ -66,22 +65,23 @@ def get(req):
     elif p['Action'] == '作業考試' and p['Teacher'] != '' and p['Course'] != '':
         #教授名字 課程名稱 作業考試
         cursor.execute("SELECT quizmethod FROM Teacher,Teach,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Teach.tid=Teacher.tid AND Teach.cid=Course.cid;")
-        co = cursor.fetchone()
-        if co != None:
-            msg += str(co[0]).strip()+'\n'
+        quiz = cursor.fetchall()
+        if quiz != None:
+            r = random.randint(0,len(quiz))
+            print('>>',r)
+            msg +=str(quiz[r][0]).strip() +'\n'
         else:
             msg += '沒有資料，請重新輸入'+'\n'
     
     elif p['Action'] == '推薦指數' and p['Teacher'] != '' and p['Course'] == '':
         #教授名字 推薦指數
-        cursor.execute("SELECT round(avg(rate)) FROM TEACHER,COMMENT WHERE tname='"+p['Teacher']+"' AND TEACHER.tid=COMMENT.tid;")
-        co = cursor.fetchone()
-        if co != None:
-            msg += '推薦指數: '+str(co[0]).strip()+'\n'
+        cursor.execute("SELECT round(avg(rate),2) FROM TEACHER,COMMENT WHERE tname='"+p['Teacher']+"' AND TEACHER.tid=COMMENT.tid;")
+        rate = cursor.fetchone()
+        if rate != None:
+            msg += '推薦指數: '+str(rate[0]).strip()+'\n'
         else:
             msg += '沒有資料，請重新輸入'+'\n'
 
-        
     elif p['Action'] == '熱門程度': #老師-課程 or 課程
         if p['Teacher'] != '':
             #教授名字 課程名稱 熱門程度
@@ -92,9 +92,9 @@ def get(req):
         else:
             #課程名稱 熱門程度
             cursor.execute("SELECT round(avg(popularity)) FROM TEACH,COURSE WHERE cname='"+p['Course']+"' AND TEACH.cid=COURSE.cid;")
-            co = cursor.fetchone()
-            if co != None:
-                msg += '熱門程度: '+str(co[0]).strip()+'\n'
+            po = cursor.fetchone()
+            if po != None:
+                msg += '熱門程度: '+str(po[0]).strip()+'\n'
             else:
                 msg += '沒有資料，請重新輸入'+'\n'
             
