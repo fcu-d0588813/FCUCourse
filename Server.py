@@ -82,7 +82,7 @@ def get(req):
         if rate != None:
             msg += '推薦指數: '+str(rate[0]).strip()+'\n'
         else:
-            msg += '沒有資料，請重新輸入'+'\n'
+            msg = '沒有資料，請重新輸入\n'
 
     elif p['Action'] == '熱門程度': #老師-課程 or 課程
         if p['Teacher'] != '':
@@ -91,14 +91,16 @@ def get(req):
             hot = cursor.fetchone()
             if hot != None:
                 msg += '熱門程度: '+str(hot[0]).strip() +'%\n'
-        else:
+        elif p['Course'] != '':
             #課程名稱 熱門程度
             cursor.execute("SELECT round(avg(popularity)) FROM TEACH,COURSE WHERE cname='"+p['Course']+"' AND TEACH.cid=COURSE.cid;")
             po = cursor.fetchone()
             if po != None:
                 msg += '熱門程度: '+str(po[0]).strip()+'\n'
             else:
-                msg += '沒有資料，請重新輸入'+'\n'
+                msg = '沒有資料，請重新輸入\n'
+        else:
+            msg = '欲搜尋課程熱門程度需輸入課程名稱'
             
     if msg == '': 
         msg = '請輸入正確課程名稱哦~'
