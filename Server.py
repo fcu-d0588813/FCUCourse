@@ -25,7 +25,7 @@ def get(req):
         teacher = cursor.fetchone()
         msg += str(teacher[0]).strip() + teacher[1].strip() +'\n'
         if p['Course'] != '':
-            cursor.execute("SELECT remark FROM TEACHER,COURSE,COMMENT WHERE TEACHER.tid=COMMENT.tid AND COURSE.cid=COMMENT.cid AND tname='"+p['Teacher']+"' AND cname='"+p['Course']"')
+            cursor.execute("SELECT remark FROM TEACHER,COURSE,COMMENT WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND TEACHER.tid=COMMENT.tid AND COURSE.cid=COMMENT.cid;")
             co = cursor.fetchone()
             #教授名字 課程名稱 評論
             #尋找 老師-課程
