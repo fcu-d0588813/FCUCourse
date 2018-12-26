@@ -83,7 +83,7 @@ def get(req):
         if quiz != []:
             r = random.randint(0,len(quiz)-1)
             print('>>',r)
-            msg +=str(quiz[r][0]).strip() +'\n'
+            msg += str(quiz[r][0]).strip() +'\n'
         else:
             msg += '沒有資料，請重新輸入\n'
     
@@ -123,7 +123,20 @@ def get(req):
                 msg = '沒有資料，請重新輸入\n'
         else:
             msg = '欲搜尋 課程熱門程度 需輸入課程名稱'
-            
+    
+    elif p['Action'] == '' and p['Course'] == '' and p['Teacher'] != '':
+        #老師所開課程
+        msg += '開課教師: '+p['Teacher']+'\n\n'
+        cursor.execute("SELECT cname FROM Teacher,Teach,Course WHERE tname='"+p['Teacher']+"' AND Teach.tid=Teacher.tid AND Teach.cid=Course.cid;")
+        co = cursor.fetchall()
+        print(co)
+        if co != []:
+            for i in range(len(co)):
+                msg += str(quiz[i][0]).strip() +'\n'
+        else:
+            msg += '目前無該老師之課程，請重新輸入\n'
+        
+
     if msg == '': 
         msg = '請輸入正確課程名稱哦~'
     
