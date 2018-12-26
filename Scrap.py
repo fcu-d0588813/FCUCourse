@@ -54,6 +54,11 @@ for i in range(len(title)):
     d.append([])
 d
 
+for dd in data:
+    for i,ds in enumerate(dd.values()):
+        d[i].append(ds)
+d   
+
 df = pd.DataFrame()
 for i in range(len(title)):
     df[title[i]] = d[i]
@@ -119,7 +124,7 @@ for i,cid in enumerate(df['course_id']):
             r = requests.post(url, json=params, headers=cookie,timeout=5)
         except:
             print('timeout')
-        if r.status_code ==200:
+        if r.status_code == 200:
             break
     s = json.loads(r.text)['d']
     if s == '':
