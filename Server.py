@@ -34,7 +34,7 @@ def get(req):
                 if rate[0]!=None:
                     msg +='推薦指數: '+str(rate[0]).strip()+'\n'
                 if remark != [] :
-                    r = random.randint(0,len(remark))
+                    r = random.randint(0,len(remark)-1)
                     print('>>',r)
                     msg +=str(remark[r][0]).strip() +'\n'
                 else:
@@ -71,7 +71,7 @@ def get(req):
         quiz = cursor.fetchall()
         print(quiz)
         if quiz != []:
-            r = random.randint(0,len(quiz))
+            r = random.randint(0,len(quiz)-1)
             print('>>',r)
             msg +=str(quiz[r][0]).strip() +'\n'
         else:
