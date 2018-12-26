@@ -25,13 +25,18 @@ def get(req):
         teacher = cursor.fetchone()
         msg +='教授:'+teacher[1].strip() +'\n'
         if p['Course'] != '':
-            cursor.execute("SELECT remark FROM TEACHER,COURSE,COMMENT WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND TEACHER.tid=COMMENT.tid AND COURSE.cid=COMMENT.cid;")
+            cursor.execute("SELECT rate,remark FROM TEACHER,COURSE,COMMENT WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND TEACHER.tid=COMMENT.tid AND COURSE.cid=COMMENT.cid;")
             co = cursor.fetchone()
             #教授名字 課程名稱 評論
             #尋找 老師-課程
             #加入msg
             if co != None:
-                msg += str(co[0]).strip() +'\n'
+                if co[0]!=None:
+                    msg +='推薦指數: '+str(co[0]).strip()+'\n'
+                if co[1]!=None:
+                    msg +=str(co[1]).strip() +'\n'
+                else:
+                    msg +='沒有評論'+'\n'                      
             else:
                 msg +='沒有評論'+'\n'
         else:
