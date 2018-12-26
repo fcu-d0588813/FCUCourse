@@ -144,6 +144,10 @@ def get(req):
     print(msg.strip())
     return msg.strip()
 
+def insertDB(req):
+
+    return '新增成功!'
+
 from flask import Flask, request, make_response, jsonify
 app = Flask(__name__)
 
@@ -155,7 +159,10 @@ def verify():
 def webhook():
     req = request.get_json(silent=True, force=True)
     print(req)
-    res = {"fulfillmentText": get(req)}
+    if 'action' in req['queryResult'].keys():
+        res = {"fulfillmentText": insertDB(req)}
+    else:
+        res = {"fulfillmentText": get(req)}
         
     return make_response(jsonify(res))
 	
