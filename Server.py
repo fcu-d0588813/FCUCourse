@@ -41,7 +41,7 @@ def get(req):
                     msg +='沒有評論'+'\n'                      
             else:
                 msg += '沒有資料，請重新輸入'+'\n'
-        else:
+        elif p['Teacher'] != '':
             #教授名字 推薦指數/評論
             cursor.execute("SELECT round(avg(rate),2) FROM TEACHER,COMMENT WHERE tname='"+p['Teacher']+"' AND TEACHER.tid=COMMENT.tid;")
             rate = cursor.fetchone()
@@ -51,6 +51,8 @@ def get(req):
                 msg +='推薦指數: '+str(rate[0]).strip() +'\n'
             else:
                 msg += '沒有資料，請重新輸入'+'\n'
+        else:
+            msg = '欲搜尋課程評價需輸入開課老師'
            
     elif p['Action'] == '課程' and p['Teacher'] != '' and p['Course'] != '':
         #教授名字 課程名稱 課程
@@ -59,7 +61,7 @@ def get(req):
         if score != None:
             msg += str(score[0]).strip()+'\n'
         else:
-            msg += '沒有資料，請重新輸入'
+            msg = '沒有資料，請重新輸入\n'
         
             
     elif p['Action'] == '作業考試' and p['Teacher'] != '' and p['Course'] != '':
@@ -71,7 +73,7 @@ def get(req):
             print('>>',r)
             msg +=str(quiz[r][0]).strip() +'\n'
         else:
-            msg += '沒有資料，請重新輸入'+'\n'
+            msg = '沒有資料，請重新輸入\n'
     
     elif p['Action'] == '推薦指數' and p['Teacher'] != '' and p['Course'] == '':
         #教授名字 推薦指數
@@ -99,7 +101,7 @@ def get(req):
                 msg += '沒有資料，請重新輸入'+'\n'
             
     if msg == '': 
-        msg = '請輸入正確課程~'
+        msg = '請輸入正確課程名稱哦~'
     
     #rows = cursor.fetchone()
     print(msg.strip())
