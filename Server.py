@@ -28,6 +28,9 @@ def get(req):
             rate = cursor.fetchone()
             cursor.execute("SELECT remark FROM TEACHER,COURSE,COMMENT WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND TEACHER.tid=COMMENT.tid AND COURSE.cid=COMMENT.cid;")
             remark = cursor.fetchall()
+            for i in range(len(remark)):
+                if 'nan' in remark[i]:
+                    remark.pop(i)
             print(rate,remark)
             msg +='教授: '+ p['Teacher'] +'\n'
             if rate[0] != None:
@@ -69,6 +72,9 @@ def get(req):
         #教授名字 課程名稱 作業考試
         cursor.execute("SELECT quizmethod FROM Teacher,Comment,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Comment.tid=Teacher.tid AND Comment.cid=Course.cid;")
         quiz = cursor.fetchall()
+        for i in range(len(quiz)):
+            if 'nan' in quiz[i]:
+                quiz.pop(i)
         print(quiz)
         if quiz != []:
             r = random.randint(0,len(quiz)-1)
