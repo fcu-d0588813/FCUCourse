@@ -20,13 +20,12 @@ def get(req):
     p = req['queryResult']['parameters']
     msg=''
     #msg = 'Course: ' + p['Course'] + '\nTeacher: ' + p['Teacher'] + '\nAction: ' + p['Action']
-
     if p['Action'] == '評價':  #老師-課程 or 老師
         cursor.execute("SELECT * FROM TEACHER WHERE tname='"+p['Teacher']+"';")
         teacher = cursor.fetchone()
         msg += str(teacher[0]).strip() + teacher[1].strip() +'\n'
         if p['Course'] != '':
-            cursor.execute("SELECT remark FROM  TEACHER,COURSE,COMMENT WHERE TEACHER.tid=COMMENT.tid AND COURSE.cid=COMMENT.cid AND tname="+p['Teacher']+" AND cname="+p['Course'])
+            cursor.execute("SELECT remark FROM TEACHER,COURSE,COMMENT WHERE TEACHER.tid=COMMENT.tid AND COURSE.cid=COMMENT.cid AND tname='"+p['Teacher']+"' AND cname='"+p['Course'])
             co = cursor.fetchone()
             #教授名字 課程名稱 評論
             #尋找 老師-課程
