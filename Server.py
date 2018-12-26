@@ -29,7 +29,7 @@ def get(req):
             #教授名字 課程名稱 評論
             cursor.execute("SELECT rate,remark FROM TEACHER,COURSE,COMMENT WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND TEACHER.tid=COMMENT.tid AND COURSE.cid=COMMENT.cid;")
             co = cursor.fetchone()
-            print(co)
+            print(cursor)
             msg +='教授:'+ p['Teacher'] +'\n'
             if co != None:
                 if co[0]!=None:
