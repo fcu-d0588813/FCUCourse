@@ -24,16 +24,19 @@ def get(req):
     if p['Action'] == '評價':  #老師-課程 or 老師
         if p['Course'] != '':
             #教授名字 課程名稱 評論
-            cursor.execute("SELECT round(avg(rate),2),remark FROM TEACHER,COURSE,COMMENT WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND TEACHER.tid=COMMENT.tid AND COURSE.cid=COMMENT.cid;")
-            co = cursor.fetchall()
-            print(co)
+            cursor.execute("SELECT round(avg(rate),2) FROM TEACHER,COURSE,COMMENT WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND TEACHER.tid=COMMENT.tid AND COURSE.cid=COMMENT.cid;")
+            rate = cursor.fetchall()
+            cursor.execute("SELECT remark FROM TEACHER,COURSE,COMMENT WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND TEACHER.tid=COMMENT.tid AND COURSE.cid=COMMENT.cid;")
+            remark = cursor.fetchall()
+            print(rate,remark)
             msg +='教授:'+ p['Teacher'] +'\n'
-            if co != None:
-                if co[0]!=None:
-                    msg +='推薦指數: '+str(co[0]).strip()+'\n'
-                if co[1]!=None or co[1]!='nan':
-                    r = random.randint(0,len(co[1]))
-                    msg +=str(co[1]).strip() +'\n'
+            if rate != None:
+                if rate[0]!=None:
+                    msg +='推薦指數: '+str(rate[0]).strip()+'\n'
+                if remark[0]!=None or remark[0]!='nan':
+                    r = random.randint(0,len(remark[0]))
+                    print('>>',r)
+                    msg +=str(remark[0]).strip() +'\n'
                 else:
                     msg +='沒有評論'+'\n'                      
             else:
