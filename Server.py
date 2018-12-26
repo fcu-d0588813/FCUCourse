@@ -132,7 +132,7 @@ def get(req):
         print(co)
         if co != []:
             for i in range(len(co)):
-                msg += str(quiz[i][0]).strip() +'\n'
+                msg += str(co[i][0]).strip() +'\n'
         else:
             msg += '目前無該老師之課程，請重新輸入\n'
         
