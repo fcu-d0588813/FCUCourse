@@ -66,7 +66,7 @@ def get(req):
             
     elif p['Action'] == '作業考試' and p['Teacher'] != '' and p['Course'] != '':
         #教授名字 課程名稱 作業考試
-        cursor.execute("SELECT quizmethod FROM Teacher,Teach,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Teach.tid=Teacher.tid AND Teach.cid=Course.cid;")
+        cursor.execute("SELECT quizmethod FROM Teacher,Comment,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Comment.tid=Teacher.tid AND Comment.cid=Course.cid;")
         quiz = cursor.fetchall()
         if quiz != None:
             r = random.randint(0,len(quiz))
