@@ -45,8 +45,7 @@ def get(req):
             #教授名字 推薦指數/評論
             cursor.execute("SELECT round(avg(rate),2) FROM TEACHER,COMMENT WHERE tname='"+p['Teacher']+"' AND TEACHER.tid=COMMENT.tid;")
             rate = cursor.fetchone()
-            #尋找對應老師ID的course、comment
-            #計算平均rate
+            print(rate)
             if rate[0] != None:
                 msg +='推薦指數: '+str(rate[0]).strip() +'\n'
             else:
@@ -58,7 +57,8 @@ def get(req):
         #教授名字 課程名稱 課程
         cursor.execute("SELECT credit,score FROM Teacher,Teach,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Teach.tid=Teacher.tid AND Teach.cid=Course.cid;")
         co = cursor.fetchone()
-        if co != None:
+        print(co)
+        if co[0] != None:
             msg += '學分數: '+str(co[0]).strip()+'\n'
             msg += '評分方式: \n'+str(co[1]).strip()+'\n'
         else:
@@ -69,6 +69,7 @@ def get(req):
         #教授名字 課程名稱 作業考試
         cursor.execute("SELECT quizmethod FROM Teacher,Comment,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Comment.tid=Teacher.tid AND Comment.cid=Course.cid;")
         quiz = cursor.fetchall()
+        print(quiz)
         if quiz != None:
             r = random.randint(0,len(quiz))
             print('>>',r)
@@ -80,7 +81,8 @@ def get(req):
         #教授名字 推薦指數
         cursor.execute("SELECT round(avg(rate),2) FROM TEACHER,COMMENT WHERE tname='"+p['Teacher']+"' AND TEACHER.tid=COMMENT.tid;")
         rate = cursor.fetchone()
-        if rate != None:
+        print(rate)
+        if rate[0] != None:
             msg += '推薦指數: '+str(rate[0]).strip()+'\n'
         else:
             msg = '沒有資料，請重新輸入\n'
@@ -90,12 +92,14 @@ def get(req):
             #教授名字 課程名稱 熱門程度
             cursor.execute("SELECT popularity FROM Teacher,Teach,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Teach.tid=Teacher.tid AND Teach.cid=Course.cid;")
             hot = cursor.fetchone()
-            if hot != None:
+            print(hot)
+            if hot[0] != None:
                 msg += '熱門程度: '+str(hot[0]).strip() +'%\n'
         elif p['Course'] != '':
             #課程名稱 熱門程度
             cursor.execute("SELECT round(avg(popularity)) FROM TEACH,COURSE WHERE cname='"+p['Course']+"' AND TEACH.cid=COURSE.cid;")
             po = cursor.fetchone()
+            print(po)
             if po != None:
                 msg += '熱門程度: '+str(po[0]).strip()+'\n'
             else:
