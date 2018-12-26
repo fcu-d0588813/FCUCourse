@@ -33,7 +33,7 @@ def get(req):
             if rate[0] != None:
                 if rate[0]!=None:
                     msg +='推薦指數: '+str(rate[0]).strip()+'\n'
-                if remark != None :
+                if remark != [] :
                     r = random.randint(0,len(remark))
                     print('>>',r)
                     msg +=str(remark[r][0]).strip() +'\n'
@@ -70,7 +70,7 @@ def get(req):
         cursor.execute("SELECT quizmethod FROM Teacher,Comment,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Comment.tid=Teacher.tid AND Comment.cid=Course.cid;")
         quiz = cursor.fetchall()
         print(quiz)
-        if quiz != None:
+        if quiz != []:
             r = random.randint(0,len(quiz))
             print('>>',r)
             msg +=str(quiz[r][0]).strip() +'\n'
@@ -100,7 +100,7 @@ def get(req):
             cursor.execute("SELECT round(avg(popularity)) FROM TEACH,COURSE WHERE cname='"+p['Course']+"' AND TEACH.cid=COURSE.cid;")
             po = cursor.fetchone()
             print(po)
-            if po != None:
+            if po[0] != None:
                 msg += '熱門程度: '+str(po[0]).strip()+'\n'
             else:
                 msg = '沒有資料，請重新輸入\n'
