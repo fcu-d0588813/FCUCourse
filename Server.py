@@ -35,7 +35,7 @@ def get(req):
                 if co[0]!=None:
                     msg +='推薦指數: '+str(co[0]).strip()+'\n'
                 if co[1]!=None or co[1]!='nan':
-                    #r = random.randint(0,len(co[1]))
+                    r = random.randint(0,len(co[1]))
                     msg +=str(co[1]).strip() +'\n'
                 else:
                     msg +='沒有評論'+'\n'                      
