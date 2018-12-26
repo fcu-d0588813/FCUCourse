@@ -35,7 +35,7 @@ def get(req):
             else:
                 msg +='沒有評論'+'\n'
         else:
-            cursor.execute("SELECT rate FROM TEACHER,COURSE,COMMENT WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND TEACHER.tid=COMMENT.tid AND COURSE.cid=COMMENT.cid;")
+            cursor.execute("SELECT avg(rate) FROM TEACHER,COMMENT WHERE tname='"+p['Teacher']+"' AND TEACHER.tid=COMMENT.tid;")
             co = cursor.fetchone()
             #教授名字 推薦指數/評論
             #尋找對應老師ID的course、comment
