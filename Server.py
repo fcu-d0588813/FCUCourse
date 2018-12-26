@@ -29,8 +29,8 @@ def get(req):
             cursor.execute("SELECT remark FROM TEACHER,COURSE,COMMENT WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND TEACHER.tid=COMMENT.tid AND COURSE.cid=COMMENT.cid;")
             remark = cursor.fetchall()
             print(rate,remark)
-            msg +='教授:'+ p['Teacher'] +'\n'
-            if rate != None:
+            msg +='教授: '+ p['Teacher'] +'\n'
+            if rate[0] != None:
                 if rate[0]!=None:
                     msg +='推薦指數: '+str(rate[0]).strip()+'\n'
                 if remark != None :
@@ -47,7 +47,7 @@ def get(req):
             rate = cursor.fetchone()
             #尋找對應老師ID的course、comment
             #計算平均rate
-            if rate != None:
+            if rate[0] != None:
                 msg +='推薦指數: '+str(rate[0]).strip() +'\n'
             else:
                 msg += '沒有資料，請重新輸入'+'\n'
@@ -56,10 +56,11 @@ def get(req):
            
     elif p['Action'] == '課程' and p['Teacher'] != '' and p['Course'] != '':
         #教授名字 課程名稱 課程
-        cursor.execute("SELECT score FROM Teacher,Teach,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Teach.tid=Teacher.tid AND Teach.cid=Course.cid;")
-        score = cursor.fetchone()
-        if score != None:
-            msg += str(score[0]).strip()+'\n'
+        cursor.execute("SELECT credit,score FROM Teacher,Teach,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Teach.tid=Teacher.tid AND Teach.cid=Course.cid;")
+        co = cursor.fetchone()
+        if co != None:
+            msg += '學分數: '+str(co[0]).strip()+'\n'
+            msg += '評分方式: \n'+str(co[1]).strip()+'\n'
         else:
             msg = '沒有資料，請重新輸入\n'
         
