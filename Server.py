@@ -32,7 +32,6 @@ def get(req):
                 if 'nan' in remark[i]:
                     remark.pop(i)
             print(rate,remark)
-            msg +='教授: '+ p['Teacher'] +'\n'
             if rate[0] != None:
                 if rate[0]!=None:
                     msg +='推薦指數: '+str(rate[0]).strip()+'\n'
