@@ -23,7 +23,7 @@ def get(req):
     if p['Action'] == '評價':  #老師-課程 or 老師
         cursor.execute("SELECT * FROM TEACHER WHERE tname='"+p['Teacher']+"';")
         teacher = cursor.fetchone()
-        msg += str(teacher[0]).strip() + teacher[1].strip() +'\n'
+        msg +='教授:'+str(teacher[0]).strip() + teacher[1].strip() +'\n'
         if p['Course'] != '':
             cursor.execute("SELECT remark FROM TEACHER,COURSE,COMMENT WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND TEACHER.tid=COMMENT.tid AND COURSE.cid=COMMENT.cid;")
             co = cursor.fetchone()
@@ -31,12 +31,20 @@ def get(req):
             #尋找 老師-課程
             #加入msg
             if co != None:
-                msg += str(co[0]).strip()+'\n'
+                msg += str(co[0]).strip() +'\n'
+            else:
+                msg +=' 沒有評論 '+'\n'
         else:
+            cursor.execute("SELECT rate FROM TEACHER,COURSE,COMMENT WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND TEACHER.tid=COMMENT.tid AND COURSE.cid=COMMENT.cid;")
+            co = cursor.fetchone()
             #教授名字 推薦指數/評論
             #尋找對應老師ID的course、comment
             #計算平均rate
-            msg += '#教授名字 推薦指數/評論\n'
+            if co != None:
+                msg +=' 推薦指數:'+str(co[0]).strip() +'\n'
+            else:
+                msg +=' 沒有推薦指數 '+'\n'
+           
             
     elif p['Action'] == '課程' and p['Teacher'] != '' and p['Course'] != '':
         #教授名字 課程名稱 課程
