@@ -22,14 +22,11 @@ def get(req):
     msg=''
     #msg = 'Course: ' + p['Course'] + '\nTeacher: ' + p['Teacher'] + '\nAction: ' + p['Action']
     if p['Action'] == '評價':  #老師-課程 or 老師
-        #cursor.execute("SELECT * FROM TEACHER WHERE tname='"+p['Teacher']+"';")
-        #teacher = cursor.fetchone()
-        #msg +='教授:'+teacher[1].strip() +'\n'
         if p['Course'] != '':
             #教授名字 課程名稱 評論
-            cursor.execute("SELECT rate,remark FROM TEACHER,COURSE,COMMENT WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND TEACHER.tid=COMMENT.tid AND COURSE.cid=COMMENT.cid;")
-            co = cursor.fetchone()
-            print(cursor)
+            cursor.execute("SELECT round(avg(rate),2),remark FROM TEACHER,COURSE,COMMENT WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND TEACHER.tid=COMMENT.tid AND COURSE.cid=COMMENT.cid;")
+            co = cursor.fetchall()
+            print(co)
             msg +='教授:'+ p['Teacher'] +'\n'
             if co != None:
                 if co[0]!=None:
