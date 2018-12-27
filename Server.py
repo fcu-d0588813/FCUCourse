@@ -138,7 +138,7 @@ def get(req):
         
 
     if msg == '': 
-        msg = '請輸入正確課程名稱哦~'
+        msg = '請輸入正確資料~'
     
     #rows = cursor.fetchone()
     print(msg.strip())
