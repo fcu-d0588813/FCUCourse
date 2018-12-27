@@ -146,14 +146,21 @@ def get(req):
 
 def insertDB(req):
     msg=''
-    p = req['queryResult']['outputContexts'][0]['parameters']
+    ps = req['queryResult']['outputContexts']
+    for p in ps:
+        if p['name'] == 'projects/fcucourse-a1c9f/agent/sessions/346a00b9-c1f3-e297-697f-cf7a8a648748/contexts/rate-followup':
+            p = p['parameters']
+            
+            msg += 'Course: '+p['Course']+'\n'
+            msg += 'Teacher: '+p['Course']+'\n'
+            msg += 'Rate: '+p['Rate']+'\n'
+            msg += 'Remark: '+p['any']+'\n'
+            
+            msg += '\n新增成功!'
+            break;
+        else:
+            msg += '讀取錯誤，請重新輸入!'
     
-    msg += 'Course: '+p['Course']+'\n'
-    msg += 'Teacher: '+p['Course']+'\n'
-    msg += 'Rate: '+p['Rate']+'\n'
-    msg += 'Remark: '+p['any']+'\n'
-    
-    msg += '\n新增成功!'
     print(msg.strip())
     return msg.strip()
 
