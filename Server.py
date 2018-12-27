@@ -149,7 +149,7 @@ def insertDB(req):
     p=None
     ps = req['queryResult']['outputContexts']
     for pp in ps:
-        if pp['name'].str.contains('/contexts/rate-followup'):
+        if pp['name'].find('/contexts/rate-followup')>-1:
             p = pp['parameters']
             break;
     else:
