@@ -146,14 +146,25 @@ def get(req):
 
 def insertDB(req):
     msg=''
-    p = req['queryResult']['outputContexts'][0]['parameters']
+    p=None
+    ps = req['queryResult']['outputContexts']
+    for pp in ps:
+        if pp['name'].find('/contexts/rate-followup')>-1:
+            p = pp['parameters']
+            break;
+    else:
+        msg += '讀取錯誤，請重新輸入!'
     
-    msg += 'Course: '+p['Course']+'\n'
-    msg += 'Teacher: '+p['Course']+'\n'
-    msg += 'Rate: '+p['Rate']+'\n'
-    msg += 'Remark: '+p['any']+'\n'
+    if p != None:
+        msg += 'Course: '+p['Course']+'\n'
+        msg += 'Teacher: '+p['Teacher']+'\n'
+        msg += 'Rate: '+p['Rate']+'\n'
+        msg += 'Remark: '+p['any']+'\n'
+        
+        msg += '\n新增成功!'
     
-    msg += '\n新增成功!'
+    if msg == '':
+        msg = '新增失敗!'
     print(msg.strip())
     return msg.strip()
 
