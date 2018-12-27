@@ -118,7 +118,7 @@ def get(req):
             po = cursor.fetchone()
             print(po)
             if po[0] != None:
-                msg += '熱門程度: '+str(po[0]).strip()+'\n'
+                msg += '熱門程度: '+str(po[0]).strip()+'%\n'
             else:
                 msg = '沒有資料，請重新輸入\n'
         else:
