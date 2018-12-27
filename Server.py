@@ -148,7 +148,12 @@ def insertDB(req):
     msg=''
     p = req['queryResult']['outputContexts'][0]['parameters']
     
-    msg = p['Course']+' '+p['Teacher']+' '+p['Rate']+'\n'+'新增成功!'
+    msg += 'Course: '+p['Course']+'\n'
+    msg += 'Teacher: '+p['Course']+'\n'
+    msg += 'Rate: '+p['Rate']+'\n'
+    msg += 'Remark: '+p['any']+'\n'
+    
+    msg += '\n新增成功!'
     print(msg.strip())
     return msg.strip()
 
