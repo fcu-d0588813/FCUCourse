@@ -157,7 +157,7 @@ def insertDB(req):
     
     if p != None:
         msg += 'Course: '+p['Course']+'\n'
-        msg += 'Teacher: '+p['Course']+'\n'
+        msg += 'Teacher: '+p['Teacher']+'\n'
         msg += 'Rate: '+p['Rate']+'\n'
         msg += 'Remark: '+p['any']+'\n'
         
