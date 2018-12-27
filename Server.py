@@ -136,6 +136,16 @@ def get(req):
         else:
             msg += '目前無該老師之課程，請重新輸入\n'
         
+    elif p['any'] != '':
+        msg += '關鍵字: '+p['any']+'\n\n'
+        cursor.execute("SELECT cname FROM Course WHERE cname LIKE '%"+p['any']+"%';")
+        co = cursor.fetchall()
+        print(co)
+        if co != []:
+            for i in range(len(co)):
+                msg += str(co[i][0]).strip() +'\n'
+        else:
+            msg += '目前無該相關課程，請重新輸入\n'
 
     if msg == '': 
         msg = '請輸入正確資料~'
