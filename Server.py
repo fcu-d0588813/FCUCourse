@@ -91,6 +91,7 @@ def get(req):
         for i in range(len(quiz)):
             if 'nan' in quiz[i]:
                 quiz.pop(i)
+                i = i-1
         print(quiz)
         if quiz != []:
             r = random.randint(0,len(quiz)-1)
