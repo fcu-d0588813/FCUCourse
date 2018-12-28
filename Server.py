@@ -91,11 +91,10 @@ def get(req):
         for q in quiz:
             if 'nan' in q:
                 quiz.pop(quiz.index(q))
-        print(quiz)
         if quiz != []:
             r = random.randint(0,len(quiz)-1)
             print('>>',r)
-            msg += str(quiz[r][0]).strip() +'\n'
+            msg += '作業考試:\n'+str(quiz[r][0]).strip() +'\n'
         else:
             msg += '沒有資料，請重新輸入\n'
     
