@@ -21,16 +21,17 @@ def get(req):
     p = req['queryResult']['parameters']
     msg=''
     #msg = 'Course: ' + p['Course'] + '\nTeacher: ' + p['Teacher'] + '\nAction: ' + p['Action']
-    if p['any'] != '':
-        msg += '關鍵字: '+p['any']+'\n\n'
-        cursor.execute("SELECT cname FROM Course WHERE cname LIKE '%"+p['any']+"%';")
-        co = cursor.fetchall()
-        print(co)
-        if co != []:
-            for i in range(len(co)):
-                msg += str(co[i][0]).strip() +'\n'
-        else:
-            msg += '目前無該相關課程，請重新輸入\n'
+    if 'any' in p.keys():
+        if p['any'] != '':
+            msg += '關鍵字: '+p['any']+'\n\n'
+            cursor.execute("SELECT cname FROM Course WHERE cname LIKE '%"+p['any']+"%';")
+            co = cursor.fetchall()
+            print(co)
+            if co != []:
+                for i in range(len(co)):
+                    msg += str(co[i][0]).strip() +'\n'
+            else:
+                msg += '目前無該相關課程，請重新輸入\n'
     
     elif p['Action'] == '評價':  #老師-課程 or 老師
         msg += '開課教師: '+p['Teacher']+'\n'
