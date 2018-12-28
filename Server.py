@@ -88,10 +88,9 @@ def get(req):
         msg += '課程名稱: '+p['Course']+'\n'
         cursor.execute("SELECT quizmethod FROM Teacher,Comment,Course WHERE tname='"+p['Teacher']+"' AND cname='"+p['Course']+"' AND Comment.tid=Teacher.tid AND Comment.cid=Course.cid;")
         quiz = cursor.fetchall()
-        for i in range(len(quiz)):
-            if 'nan' in quiz[i]:
-                quiz.pop(i)
-                i = i-1
+        for q in quiz:
+            if 'nan' in q:
+                quiz.pop(quiz.index(q))
         print(quiz)
         if quiz != []:
             r = random.randint(0,len(quiz)-1)
