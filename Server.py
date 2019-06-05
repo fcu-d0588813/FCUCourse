@@ -9,14 +9,8 @@ import os
 import psycopg2
 import random
 
-#AWS RDS資料庫
-conn = psycopg2.connect(database="fcucourse",
-                        user="fcucourseuser",
-                        password="fcufcu2016",
-                        host="fcucourseinstance.cmbjdacwbwjl.us-east-1.rds.amazonaws.com",
-                        port="5432")
-cursor = conn.cursor()
-'''
+
+
 #HEROKU資料庫
 conn = psycopg2.connect(database="d3l8u727fkdhuh",
                         user="uskhmdlztebice",
@@ -24,7 +18,7 @@ conn = psycopg2.connect(database="d3l8u727fkdhuh",
                         host="ec2-107-20-237-78.compute-1.amazonaws.com",
                         port="5432")
 cursor = conn.cursor()
-'''
+
 
 def get(req):
     p = req['queryResult']['parameters']
